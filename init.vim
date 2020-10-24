@@ -1,5 +1,11 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
+Plug 'kshenoy/vim-signature' " display marks on the left
+
+Plug 'jpalardy/vim-slime', { 'for': 'python' }
+let g:slime_target = "neovim"
+Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
+let g:ipython_cell_delimit_cells_by = 'marks'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 set cmdheight=2
@@ -32,10 +38,19 @@ nmap <leader>rn <Plug>(coc-rename)
 
 Plug 'sheerun/vim-polyglot'
 Plug 'morhetz/gruvbox'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'romainl/vim-cool' "disable search highlight with movement
+Plug 'fridgelord/split-term.vim'
+let g:split_term_height = 10
+Plug 'pacha/vem-tabline'
+let g:vem_tabline_show = 2
+let g:vem_tabline_show_number = 'buffnr'
+nnoremap <C-PageDown> <Plug>vem_next_buffer-
+nnoremap <C-PageUp> <Plug>vem_prev_buffer-
+
 
 Plug 'thinca/vim-quickrun'
 let g:quickrun_config = {
@@ -52,10 +67,20 @@ call plug#end()
 set ignorecase		" ignore case
 set smartcase		" but don't ignore it, when search string contains uppercase letters
 
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+nnoremap <A-j> <C-w><C-j>
+nnoremap <A-k> <C-w><C-k>
+nnoremap <A-l> <C-w><C-l>
+nnoremap <A-h> <C-w><C-h>
+
+nnoremap <A-1> 1gt
+nnoremap <A-2> 2gt
+nnoremap <A-3> 3gt
+nnoremap <A-4> 4gt
+nnoremap <A-5> 5gt
+nnoremap <A-6> 6gt
+nnoremap <A-7> 7gt
+nnoremap <A-8> 8gt
+nnoremap <A-9> 9gt
 
 nnoremap	;	:
 cmap		Q	quit
@@ -71,7 +96,6 @@ inoremap <c-v> <esc>:set paste<cr>a<c-r>=getreg('+')<cr><esc>:set nopaste<cr>mi`
 
 " map brackets and gn/gp for diffview to move to prev/next diff
 if &diff
-	set cursorline
 	map gn ]c
 	map gp [c
 	map ] ]c
@@ -126,8 +150,9 @@ set completeopt=menu,longest,preview
 set splitbelow 		" open new split below current
 set splitright		" open new split to the right
 
-set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P	"char code in statusline
+set statusline=%{FugitiveStatusline()}%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P	"char code in statusline
 set cursorline
+set scrolloff=99
 
 
 " webcode

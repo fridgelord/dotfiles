@@ -6,6 +6,7 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'vim-scripts/indentpython.vim'
@@ -26,7 +27,7 @@ Plugin 'nvie/vim-flake8' "pep8 check
 " let g:syntastic_check_on_wq = 0
 
 " needs pip install flake8
-" Plugin 'w0rp/ale' "syntax chech in the fly
+Plugin 'w0rp/ale' "syntax chech in the fly
 " let g:ale_sign_column_always = 1
 " let g:ale_change_sign_column_color = 1
 " " let g:ale_lint_on_text_changed='normal'
