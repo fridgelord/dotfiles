@@ -1,0 +1,7 @@
+userxbindkeysrc=$HOME/.xbindkeysrc
+
+setxkbmap -option caps:escape &
+
+if [ -f "$userxbindkeysrc" ]; then
+    xbindkeys &
+fi
