@@ -1,5 +1,8 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
+Plug 'thaerkh/vim-workspace'
+let g:workspace_autocreate = 1
+
 Plug 'kshenoy/vim-signature' " display marks on the left
 
 Plug 'jpalardy/vim-slime', { 'for': 'python' }
