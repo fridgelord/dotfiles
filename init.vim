@@ -121,7 +121,7 @@ set encoding=utf-8
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
-set nobackup		" DON'T keep a backup file
+" set nobackup		" DON'T keep a backup file
 
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
