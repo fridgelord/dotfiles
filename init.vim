@@ -1,5 +1,8 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
+Plug 'thaerkh/vim-workspace'
+let g:workspace_autocreate = 1
+
 Plug 'kshenoy/vim-signature' " display marks on the left
 
 Plug 'jpalardy/vim-slime', { 'for': 'python' }
@@ -121,7 +124,7 @@ set encoding=utf-8
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
-set nobackup		" DON'T keep a backup file
+" set nobackup		" DON'T keep a backup file
 
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
