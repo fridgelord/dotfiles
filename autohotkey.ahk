@@ -2,6 +2,9 @@
 XButton1::PgUp
 XButton2::PgDn
 
+WheelLeft::Browser_Back
+WheelRight::Browser_Forward
+
 #q::PostMessage, 0x112, 0xF060,,, A
 
 #+1::
