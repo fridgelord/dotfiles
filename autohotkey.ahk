@@ -2,8 +2,11 @@
 XButton1::PgUp
 XButton2::PgDn
 
+#IfWinActive, ahk_exe chrome.exe
 WheelLeft::Browser_Back
 WheelRight::Browser_Forward
+#IfWinActive
+
 
 #q::PostMessage, 0x112, 0xF060,,, A
 
