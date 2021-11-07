@@ -1,9 +1,11 @@
 set scroll-full-overlap 0.1
 set adjust-open best-fit
 
-set default-bg "#FFFFF0"
-set recolor true
-set recolor-lightcolor "#FFFFF0"
-set recolor-darkcolor "#000000"
+#### Sepia background ###########
+# set default-bg "#FFFFF0"
+# set recolor true
+# set recolor-lightcolor "#FFFFF0"
+# set recolor-darkcolor "#000000"
+#################################
 
 map <C-p> feedkeys ":! okular --print-and-exit %<Return>"
