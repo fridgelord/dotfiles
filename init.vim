@@ -1,14 +1,35 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
+<<<<<<< Updated upstream
 Plug 'thaerkh/vim-workspace'
 let g:workspace_autocreate = 1
 
 Plug 'kshenoy/vim-signature' " display marks on the left
+=======
+" Plug 'kshenoy/vim-signature' " display marks on the left
+>>>>>>> Stashed changes
 
 Plug 'jpalardy/vim-slime', { 'for': 'python' }
-let g:slime_target = "neovim"
+" let g:slime_target = "neovim"
 Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
-let g:ipython_cell_delimit_cells_by = 'marks'
+" let g:ipython_cell_delimit_cells_by = 'marks'
+let g:ipython_cell_delimit_cells_by = 'tags'
+let g:slime_target = 'neovim'
+let g:slime_dont_ask_default = 1
+
+function! IPythonOpen()
+  " open a new terminal in vertical split and run IPython
+  vnew|call termopen('ipython --matplotlib')
+  file ipython " name the new buffer
+
+  " set slime target to new terminal
+  if !exists('g:slime_default_config')
+    let g:slime_default_config = {}
+  end
+  let g:slime_default_config['jobid'] = b:terminal_job_id
+
+  wincmd p " switch to the previous buffer
+endfunction
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 set cmdheight=2
@@ -39,7 +60,16 @@ function! s:show_documentation()
 endfunction
 nmap <leader>rn <Plug>(coc-rename)
 
+Plug 'moll/vim-bbye'
+Plug 'ActivityWatch/aw-watcher-vim'
+" Plug 'psf/black'
+" let g:black_linelength = 100
 Plug 'sheerun/vim-polyglot'
+" semantic highlighting for Python in Neovim
+" Plug 'numirias/semshi'
+" Auto table formatting
+Plug 'dhruvasagar/vim-table-mode'
+let g:table_mode_corner='|'
 Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -51,16 +81,15 @@ let g:split_term_height = 10
 Plug 'pacha/vem-tabline'
 let g:vem_tabline_show = 2
 let g:vem_tabline_show_number = 'buffnr'
-nnoremap <C-PageDown> <Plug>vem_next_buffer-
-nnoremap <C-PageUp> <Plug>vem_prev_buffer-
+nmap <C-PageDown> <Plug>vem_next_buffer-
+nmap <C-PageUp> <Plug>vem_prev_buffer-
 
 
-Plug 'thinca/vim-quickrun'
-let g:quickrun_config = {
-      \'*': {
-      \'outputter/buffer/split': ':rightbelow vsplit'},}
-nnoremap <silent> <F5> :w<CR> :QuickRun python3<CR>
-vnoremap <silent> <F5> :w<CR> :QuickRun python3<CR>
+Plug 'erietz/vim-terminator'
+let g:terminator_clear_default_mappings="nothing"
+nnoremap <silent> <F5> :TerminatorRunFileInOutputBuffer <CR>
+nnoremap <silent> <F6> :TerminatorStopRun <CR>
+nnoremap <silent> <F8> :TerminatorRunFileInTerminal <CR>
 
 
 
@@ -75,6 +104,17 @@ nnoremap <A-k> <C-w><C-k>
 nnoremap <A-l> <C-w><C-l>
 nnoremap <A-h> <C-w><C-h>
 
+inoremap <C-n> :tabedit %<CR>
+inoremap <A-1> 1gt
+inoremap <A-2> 2gt
+inoremap <A-3> 3gt
+inoremap <A-4> 4gt
+inoremap <A-5> 5gt
+inoremap <A-6> 6gt
+inoremap <A-7> 7gt
+inoremap <A-8> 8gt
+inoremap <A-9> 9gt
+nnoremap <C-n> :tabedit %<CR>
 nnoremap <A-1> 1gt
 nnoremap <A-2> 2gt
 nnoremap <A-3> 3gt
@@ -145,7 +185,11 @@ set formatoptions=1	" prevent edited lines from breaking
 set nolinebreak		" if wrapping do so only on whitespace
 syntax on			
 set confirm		" ask on quit
-" set clipboard=unnamedplus	" use X11 register (change to base on win/unix)
+if has('win32')
+  set clipboard=unnamed
+else
+  set clipboard=unnamedplus
+endif
 set laststatus=2	" always dispaly status line
 set wildignorecase
 set completeopt=menu,longest,preview
@@ -164,12 +208,23 @@ au BufNewFile,BufRead *.js, *.html, *.css
     \ set softtabstop=2
     \ set shiftwidth=2
 
+augroup Markdown
+  autocmd!
+  autocmd FileType markdown setlocal wrap
+  autocmd FileType markdown setlocal linebreak
+  autocmd FileType markdown setlocal spell
+  autocmd FileType markdown setlocal spelllang=en,pl
+augroup END
+
 " important only in case of leader change or maping to esc
-" set timeoutlen=1000 
-" set ttimeoutlen=10
-" imap jj			<Esc>
+set timeoutlen=1000 
+set ttimeoutlen=10
+imap jj			<Esc>
 
 
-" let g:gruvbox_italic = 1
+let g:gruvbox_italic = 1
 colorscheme gruvbox
 set bg=dark
+
+" replace previous spell error with first suggestion in insert
+imap <c-l> <c-g>u<Esc>[s1z=`]a<c-g>u
