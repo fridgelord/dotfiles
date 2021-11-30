@@ -2,7 +2,7 @@
 XButton1::PgUp
 XButton2::PgDn
 
-#IfWinActive, ahk_exe chrome.exe
+#If WinActive("ahk_exe chrome.exe") || WinActive("ahk_exe Slack.exe")
 WheelLeft::Browser_Back
 WheelRight::Browser_Forward
 #IfWinActive
