@@ -1,13 +1,9 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
-<<<<<<< Updated upstream
-Plug 'thaerkh/vim-workspace'
+Plug 'thaerkh/vim-workspace'  " save session between restarts
 let g:workspace_autocreate = 1
 
-Plug 'kshenoy/vim-signature' " display marks on the left
-=======
 " Plug 'kshenoy/vim-signature' " display marks on the left
->>>>>>> Stashed changes
 
 Plug 'jpalardy/vim-slime', { 'for': 'python' }
 " let g:slime_target = "neovim"
@@ -164,7 +160,7 @@ set encoding=utf-8
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
-" set nobackup		" DON'T keep a backup file
+set nobackup		" DON'T keep a backup file
 
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
