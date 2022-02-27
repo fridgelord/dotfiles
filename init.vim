@@ -1,12 +1,39 @@
-call plug#begin('~/.local/share/nvim/plugged')
+if !has('nvim')
+  set nocompatible
+  filetype off
+endif
 
-Plug 'thaerkh/vim-workspace'  " save session between restarts
+" https://github.com/junegunn/vim-plug
+if has('nvim')
+  call plug#begin('~/.local/share/nvim/plugged')
+else
+  call plug#begin
+endif
+
+
+" save sessions between restarts ############
+Plug 'thaerkh/vim-workspace'
 let g:workspace_autocreate = 1
+" ###########################################
 
-" Plug 'kshenoy/vim-signature' " display marks on the left
 
+" display marks on the left #################
+Plug 'kshenoy/vim-signature'
+" ###########################################
+
+
+# ##### Rrun python in buffer ###############
+Plugin 'thinca/vim-quickrun'
+let g:quickrun_config = {
+      \'*': {
+      \'outputter/buffer/split': ':rightbelow vsplit'},}
+nnoremap <silent> <F5> :w<CR> :QuickRun python3<CR>
+vnoremap <silent> <F5> :w<CR> :QuickRun python3<CR>
+###############################################
+
+
+" Ipython for vim ###########################
 Plug 'jpalardy/vim-slime', { 'for': 'python' }
-" let g:slime_target = "neovim"
 Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
 " let g:ipython_cell_delimit_cells_by = 'marks'
 let g:ipython_cell_delimit_cells_by = 'tags'
@@ -26,8 +53,12 @@ function! IPythonOpen()
 
   wincmd p " switch to the previous buffer
 endfunction
+" ###########################################
 
+
+" CoC ###########################################
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Give more space for displaying messages.
 set cmdheight=2
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
@@ -46,6 +77,7 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -55,50 +87,64 @@ function! s:show_documentation()
   endif
 endfunction
 nmap <leader>rn <Plug>(coc-rename)
+" ####################################################
 
-Plug 'moll/vim-bbye'
-Plug 'ActivityWatch/aw-watcher-vim'
-" Plug 'psf/black'
-" let g:black_linelength = 100
-Plug 'sheerun/vim-polyglot'
-" semantic highlighting for Python in Neovim
-" Plug 'numirias/semshi'
-" Auto table formatting
-Plug 'dhruvasagar/vim-table-mode'
-let g:table_mode_corner='|'
-Plug 'morhetz/gruvbox'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-Plug 'romainl/vim-cool' "disable search highlight with movement
-Plug 'fridgelord/split-term.vim'
-let g:split_term_height = 10
+
+" Tabline ###########################################
 Plug 'pacha/vem-tabline'
 let g:vem_tabline_show = 2
 let g:vem_tabline_show_number = 'buffnr'
 nmap <C-PageDown> <Plug>vem_next_buffer-
 nmap <C-PageUp> <Plug>vem_prev_buffer-
+" ####################################################
 
 
+" ############ run current files in terminal #######################
 Plug 'erietz/vim-terminator'
 let g:terminator_clear_default_mappings="nothing"
 nnoremap <silent> <F5> :TerminatorRunFileInOutputBuffer <CR>
 nnoremap <silent> <F6> :TerminatorStopRun <CR>
 nnoremap <silent> <F8> :TerminatorRunFileInTerminal <CR>
+" #################################################################################
 
 
+" ############ SMALLER PLUGINS #######################
+Plug 'psf/black'
+let g:black_linelength = 100
+Plug 'sheerun/vim-polyglot'
+Plug 'dhruvasagar/vim-table-mode'  " auto table formatting
+let g:table_mode_corner='|'
+Plug 'morhetz/gruvbox'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+nnoremap <C-_> gcc
+vnoremap <C-_> gcc
+Plug 'tpope/vim-fugitive'
+Plug 'romainl/vim-cool' "disable search highlight with movement
+Plug 'fridgelord/split-term.vim'
+let g:split_term_height = 10
+" ####################################################
+
+
+" ############ UNUSED PLUGINS #######################
+" Plug 'moll/vim-bbye'
+" Plug 'ActivityWatch/aw-watcher-vim'  " for time tracker
+" semantic highlighting for Python in Neovim
+" Plug 'numirias/semshi'
+" ####################################################
 
 call plug#end()
+
 
 
 set ignorecase		" ignore case
 set smartcase		" but don't ignore it, when search string contains uppercase letters
 
-nnoremap <A-j> <C-w><C-j>
-nnoremap <A-k> <C-w><C-k>
-nnoremap <A-l> <C-w><C-l>
-nnoremap <A-h> <C-w><C-h>
+nnoremap <C-j> <C-w><C-j>
+nnoremap <C-k> <C-w><C-k>
+nnoremap <C-l> <C-w><C-l>
+nnoremap <C-h> <C-w><C-h>
 
 inoremap <C-n> :tabedit %<CR>
 inoremap <A-1> 1gt
@@ -161,6 +207,7 @@ set encoding=utf-8
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 set nobackup		" DON'T keep a backup file
+set nowritebackup
 
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
@@ -181,11 +228,7 @@ set formatoptions=1	" prevent edited lines from breaking
 set nolinebreak		" if wrapping do so only on whitespace
 syntax on			
 set confirm		" ask on quit
-if has('win32')
-  set clipboard=unnamed
-else
-  set clipboard=unnamedplus
-endif
+set clipboard=unnamedplus " on linux it's ctrl-c clipboard on, on win it doesn't matter
 set laststatus=2	" always dispaly status line
 set wildignorecase
 set completeopt=menu,longest,preview
@@ -193,9 +236,9 @@ set completeopt=menu,longest,preview
 set splitbelow 		" open new split below current
 set splitright		" open new split to the right
 
-set statusline=%{FugitiveStatusline()}%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P	"char code in statusline
+set statusline=%{FugitiveStatusline()}%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P	"char code in statusline + fugitive
 set cursorline
-set scrolloff=99
+set scrolloff=10
 
 
 " webcode
@@ -213,9 +256,9 @@ augroup Markdown
 augroup END
 
 " important only in case of leader change or maping to esc
-set timeoutlen=1000 
-set ttimeoutlen=10
-imap jj			<Esc>
+" set timeoutlen=1000
+" set ttimeoutlen=10
+" imap jj			<Esc>
 
 
 let g:gruvbox_italic = 1
