@@ -7,7 +7,7 @@ endif
 if has('nvim')
   call plug#begin('~/.local/share/nvim/plugged')
 else
-  call plug#begin
+  call plug#begin()
 endif
 
 
@@ -22,14 +22,14 @@ Plug 'kshenoy/vim-signature'
 " ###########################################
 
 
-# ##### Rrun python in buffer ###############
-Plugin 'thinca/vim-quickrun'
+" # ##### Rrun python in buffer ###############
+Plug 'thinca/vim-quickrun'
 let g:quickrun_config = {
       \'*': {
       \'outputter/buffer/split': ':rightbelow vsplit'},}
 nnoremap <silent> <F5> :w<CR> :QuickRun python3<CR>
 vnoremap <silent> <F5> :w<CR> :QuickRun python3<CR>
-###############################################
+" ###############################################
 
 
 " Ipython for vim ###########################
@@ -109,7 +109,7 @@ nnoremap <silent> <F8> :TerminatorRunFileInTerminal <CR>
 
 
 " ############ SMALLER PLUGINS #######################
-Plug 'psf/black'
+Plug 'psf/black', {'branch': 'main'}
 let g:black_linelength = 100
 Plug 'sheerun/vim-polyglot'
 Plug 'dhruvasagar/vim-table-mode'  " auto table formatting
@@ -176,7 +176,9 @@ inoremap <c-v> <esc>:set paste<cr>a<c-r>=getreg('+')<cr><esc>:set nopaste<cr>mi`
 :nnoremap <Leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
 
 " remove search highlighting on esc
-" nnoremap <silent> <Enter> :noh<cr>
+if has('ide')
+  nnoremap <silent> <Enter> :noh<cr>
+endif
 
 
 " map brackets and gn/gp for diffview to move to prev/next diff
