@@ -286,3 +286,4 @@ set bg=dark
 " replace previous spell error with first suggestion in insert
 imap <c-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
+vnoremap p "_dP  " don't overwrite the register when replacing selected text
