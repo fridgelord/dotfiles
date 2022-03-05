@@ -1,147 +1,208 @@
-set nocompatible
-filetype off
+if !has('nvim')
+  set nocompatible
+  filetype off
+endif
+
+" https://github.com/junegunn/vim-plug
+if has('nvim')
+  call plug#begin('~/.local/share/nvim/plugged')
+else
+  call plug#begin()
+endif
 
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" save sessions between restarts ############
+Plug 'thaerkh/vim-workspace'
+let g:workspace_autocreate = 1
+if has('nvim')
+  let g:workspace_session_directory = $HOME . '/.local/share/nvim/sessions/'
+  let g:workspace_undodir = $HOME . '/.local/share/nvim/undo/'
+else
+  let g:workspace_session_directory = $HOME . '/.vim/sessions/'
+  let g:workspace_undodir = $HOME . '/.vim/undo/'
+endif
+" " when workspace plugin doesn't work
+" if has('persistent_undo')
+"   set undofile
+"   if has('nvim')
+"     set undodir=$HOME/.local/share/nvim/undo/
+"   else
+"     set undodir=$HOME/.vim/undo/
+"   endif
+" endif
+" ###########################################
 
 
-Plugin 'VundleVim/Vundle.vim'
+" display marks on the left #################
+Plug 'kshenoy/vim-signature'
+" ###########################################
 
-Plugin 'vim-scripts/indentpython.vim'
 
-Plugin 'romainl/vim-cool' "disable search highlight with movement
-
-" needs pip install flake8
-Plugin 'nvie/vim-flake8' "pep8 check
-
-" Plugin 'scrooloose/syntastic' "syntax check
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-
-" needs pip install flake8
-Plugin 'w0rp/ale' "syntax chech in the fly
-" let g:ale_sign_column_always = 1
-" let g:ale_change_sign_column_color = 1
-" " let g:ale_lint_on_text_changed='normal'
-" let g:ale_python_flake8_args = '--ignore=E2,E3,E5,E722 --max-line-length=99'
-" " workaround for disappearing cursor in some vim versions
-" let g:ale_echo_cursor = 0
-
-" Plugin 'scrooloose/nerdtree' "file tree
-" let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
-
-" Plugin 'kien/ctrlp.vim' "search for basically anything from VIM
-
-" Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-
-" Plugin 'tpope/vim-fugitive'
-" set diffopt+=vertical
-
-Plugin 'tmhedberg/SimpylFold'
-let g:SimpylFold_docstring_preview=1 " see the docstrings for folded code
-
-" Plugin 'Raimondi/delimitMate' " break indenting a little
-" let delimitMate_expand_cr = 1
-" let delimitMate_expand_space = 1
-" 
-Plugin 'thinca/vim-quickrun'
+" # ##### Rrun python in buffer ###############
+Plug 'thinca/vim-quickrun'
 let g:quickrun_config = {
       \'*': {
-      \'outputter/buffer/split': ':rightbelow vsplit'},}
+        \'outputter/buffer/split': ':rightbelow vsplit'},}
 nnoremap <silent> <F5> :w<CR> :QuickRun python3<CR>
 vnoremap <silent> <F5> :w<CR> :QuickRun python3<CR>
-
-Plugin 'davidhalter/jedi-vim'
-let g:jedi#completions_enabled = 0
-let g:jedi#show_call_signatures_delay = 50
-let g:jedi#goto_command = "gD"
-let g:jedi#documentation_command = "gd"
-"" Doesn't work for some reason (can't find configure function)
-"" let g:jedi#auto_initialization = 0
-"" let g:jedi#auto_vim_configuration = 0
-"" if g:jedi#show_call_signatures > 0
-"	" call jedi#configure_call_signatures()
-"" endif
-
-" needs pip install jedi
-" after installation run ~/.vim/bundle/YCM/install.py
-Bundle 'Valloric/YouCompleteMe'
-let g:ycm_python_binary_path = '/usr/bin/python3'
-" let g:ycm_autoclose_preview_window_after_completion=1
-"
-" messes with jedi-vim document lookup
-" map <leader>g  	:YcmCompleter GoToDefinition<CR>
-" map <leader>d  	:YcmCompleter GetDoc<CR>
-" map gd		:YcmCompleter GetDoc<CR>
-" map gD		:YcmCompleter GoTo<CR>
-
-" " Plugin 'python-mode/python-mode'
-" " let g:pymode_python = 'python3'
-
-Plugin 'The-NERD-Commenter'
-let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
-let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDDefaultAlign = 'left' " Align line-wise comment delimiters flush left instead of following code indentation
-noremap <silent> <C-_> :call NERDComment(0,"toggle")<CR>
-" vnoremap <silent> <C-_> :call NERDComment(0,"toggle")<CR> "not needed??
-inoremap <silent> <C-_> <esc>:call NERDComment(0,"toggle")<CR>
+" ###############################################
 
 
-""""""""""""""""""""""
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-""""""" end for Vundle
+" Ipython for vim ###########################
+Plug 'jpalardy/vim-slime', { 'for': 'python' }
+Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
+" let g:ipython_cell_delimit_cells_by = 'marks'
+let g:ipython_cell_delimit_cells_by = 'tags'
+let g:slime_target = 'neovim'
+let g:slime_dont_ask_default = 1
 
-" To be checked
-" show bad unnecessary whitespace (isn't part of some Plugin?)
-"au BufRead,BufNewFile *.py,*.pyw,*.c,*.h ; match BadWhitespace /\s\+$/
-" what does this do??
-" autocmd FileType python nnoremap <F8> :0,$!yapf<Cr><C-o>
-"filetype plugin on
-"set showtabline=2               " File tabs allways visible
-":nmap <C-S-tab> :tabprevious<cr>
-":nmap <C-tab> :tabnext<cr>
-":nmap <C-t> :tabnew<cr>
-":map <C-t> :tabnew<cr>
-":map <C-S-tab> :tabprevious<cr>
-":map <C-tab> :tabnext<cr>
-":map <C-w> :tabclose<cr>
-":imap <C-S-tab> <ESC>:tabprevious<cr>i
-":imap <C-tab> <ESC>:tabnext<cr>i
-":imap <C-t> <ESC>:tabnew<cr>
+function! IPythonOpen()
+  " open a new terminal in vertical split and run IPython
+  vnew|call termopen('ipython --matplotlib')
+  file ipython " name the new buffer
 
+  " set slime target to new terminal
+  if !exists('g:slime_default_config')
+    let g:slime_default_config = {}
+  end
+  let g:slime_default_config['jobid'] = b:terminal_job_id
+
+  wincmd p " switch to the previous buffer
+endfunction
+" ###########################################
 
 
-"let python_highlight_all=1
-syntax on
+" CoC ###########################################
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Give more space for displaying messages.
+set cmdheight=2
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+" Recently vim can merge signcolumn and number column into one
+if has("patch-8.1.1564")
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocActionAsync('doHover')
+  endif
+endfunction
+nmap <leader>rn <Plug>(coc-rename)
+" ####################################################
 
-"split navigations
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+
+" Tabline ###########################################
+Plug 'pacha/vem-tabline'
+let g:vem_tabline_show = 2
+let g:vem_tabline_show_number = 'buffnr'
+nmap <C-PageDown> <Plug>vem_next_buffer-
+nmap <C-PageUp> <Plug>vem_prev_buffer-
+" ####################################################
+
+
+" ############ run current files in terminal #######################
+Plug 'erietz/vim-terminator'
+let g:terminator_clear_default_mappings="nothing"
+nnoremap <silent> <F5> :TerminatorRunFileInOutputBuffer <CR>
+nnoremap <silent> <F6> :TerminatorStopRun <CR>
+nnoremap <silent> <F8> :TerminatorRunFileInTerminal <CR>
+" #################################################################################
+
+
+" ############ SMALLER PLUGINS #######################
+Plug 'psf/black', {'branch': 'main'}
+let g:black_linelength = 100
+Plug 'sheerun/vim-polyglot'
+Plug 'dhruvasagar/vim-table-mode'  " auto table formatting
+let g:table_mode_corner='|'
+Plug 'morhetz/gruvbox'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+nnoremap <C-_> gcc
+vnoremap <C-_> gcc
+Plug 'tpope/vim-fugitive'
+Plug 'romainl/vim-cool' "disable search highlight with movement
+Plug 'fridgelord/split-term.vim'
+let g:split_term_height = 10
+" ####################################################
+
+
+" ############ UNUSED PLUGINS #######################
+" Plug 'moll/vim-bbye'
+" Plug 'ActivityWatch/aw-watcher-vim'  " for time tracker
+" semantic highlighting for Python in Neovim
+" Plug 'numirias/semshi'
+" ####################################################
+
+call plug#end()
+
+
+
+set ignorecase		" ignore case
+set smartcase		" but don't ignore it, when search string contains uppercase letters
+
+nnoremap <C-j> <C-w><C-j>
+nnoremap <C-k> <C-w><C-k>
+nnoremap <C-l> <C-w><C-l>
+nnoremap <C-h> <C-w><C-h>
+
+inoremap <C-n> :tabedit %<CR>
+inoremap <A-1> 1gt
+inoremap <A-2> 2gt
+inoremap <A-3> 3gt
+inoremap <A-4> 4gt
+inoremap <A-5> 5gt
+inoremap <A-6> 6gt
+inoremap <A-7> 7gt
+inoremap <A-8> 8gt
+inoremap <A-9> 9gt
+nnoremap <C-n> :tabedit %<CR>
+nnoremap <A-1> 1gt
+nnoremap <A-2> 2gt
+nnoremap <A-3> 3gt
+nnoremap <A-4> 4gt
+nnoremap <A-5> 5gt
+nnoremap <A-6> 6gt
+nnoremap <A-7> 7gt
+nnoremap <A-8> 8gt
+nnoremap <A-9> 9gt
 
 nnoremap	;	:
 cmap		Q	quit
+" ctrl+v pastes from + register in insert mode
+inoremap <c-v> <esc>:set paste<cr>a<c-r>=getreg('+')<cr><esc>:set nopaste<cr>mi`[=`]`ia
+
+" search & replace word under cursor
+:nnoremap <Leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
+
 " remove search highlighting on esc
-nnoremap <silent> <Enter> :noh<cr>
+if has('ide')
+  nnoremap <silent> <Enter> :noh<cr>
+endif
+
 
 " map brackets and gn/gp for diffview to move to prev/next diff
 if &diff
-	set cursorline
-	map gn ]c
-	map gp [c
-	map ] ]c
-	map [ [c
+  map gn ]c
+  map gp [c
+  map ] ]c
+  map [ [c
 endif
 
 " Enable folding
@@ -151,25 +212,25 @@ set foldlevel=99
 nnoremap <space> za
 
 
-au BufNewFile,BufRead *.py;
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set textwidth=79
-    \ set expandtab
-    \ set autoindent
-    \ set fileformat=unix
+" au BufNewFile,BufRead *.py;
+" \ set tabstop=4
+" \ set softtabstop=4
+" \ set shiftwidth=4
+" \ set textwidth=79
+" \ set expandtab
+" \ set autoindent
+" \ set fileformat=unix
 set encoding=utf-8
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 set nobackup		" DON'T keep a backup file
+set nowritebackup
 
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
-set bg=dark
 set hls
 set rdt=3000
 set number relativenumber	" line numbers relative
@@ -185,7 +246,7 @@ set formatoptions=1	" prevent edited lines from breaking
 set nolinebreak		" if wrapping do so only on whitespace
 syntax on			
 set confirm		" ask on quit
-set clipboard=unnamedplus	" use X11 register (change to base on win/unix)
+set clipboard=unnamedplus " on linux it's ctrl-c clipboard on, on win it doesn't matter
 set laststatus=2	" always dispaly status line
 set wildignorecase
 set completeopt=menu,longest,preview
@@ -193,19 +254,36 @@ set completeopt=menu,longest,preview
 set splitbelow 		" open new split below current
 set splitright		" open new split to the right
 
-set statusline=%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P	"char code in statusline
+set statusline=%{FugitiveStatusline()}%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P	"char code in statusline + fugitive
+set cursorline
+set scrolloff=10
 
 
 " webcode
 au BufNewFile,BufRead *.js, *.html, *.css
-    \ set tabstop=2
-    \ set softtabstop=2
-    \ set shiftwidth=2
+      \ set tabstop=2
+      \ set softtabstop=2
+      \ set shiftwidth=2
+
+augroup Markdown
+  autocmd!
+  autocmd FileType markdown setlocal wrap
+  autocmd FileType markdown setlocal linebreak
+  autocmd FileType markdown setlocal spell
+  autocmd FileType markdown setlocal spelllang=en,pl
+augroup END
 
 " important only in case of leader change or maping to esc
-" set timeoutlen=1000 
+" set timeoutlen=1000
 " set ttimeoutlen=10
 " imap jj			<Esc>
 
 
+let g:gruvbox_italic = 1
 colorscheme gruvbox
+set bg=dark
+
+" replace previous spell error with first suggestion in insert
+imap <c-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+
+vnoremap p "_dP  " don't overwrite the register when replacing selected text
