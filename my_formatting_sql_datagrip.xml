@@ -1,0 +1,12 @@
+<code_scheme name="Default" version="173">
+  <SqlCodeStyleSettings version="6">
+    <option name="QUERY_EL_LINE" value="101" />
+    <option name="QUERY_IN_ONE_STRING" value="1" />
+    <option name="FROM_EL_LINE" value="101" />
+    <option name="FROM_WRAP_ON" value="true" />
+    <option name="WHERE_EL_BOUND" value="0" />
+    <option name="ORDER_EL_LINE" value="1" />
+    <option name="EXPR_CASE_THEN_ALIGN" value="true" />
+    <option name="EXPR_CASE_END" value="1" />
+  </SqlCodeStyleSettings>
+</code_scheme>
