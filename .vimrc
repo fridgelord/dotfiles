@@ -11,118 +11,119 @@ else
 endif
 
 
-" save sessions between restarts ############
-Plug 'thaerkh/vim-workspace'
-let g:workspace_autocreate = 1
-if has('nvim')
-  let g:workspace_session_directory = $HOME . '/.local/share/nvim/sessions/'
-  let g:workspace_undodir = $HOME . '/.local/share/nvim/undo/'
-else
-  let g:workspace_session_directory = $HOME . '/.vim/sessions/'
-  let g:workspace_undodir = $HOME . '/.vim/undo/'
-endif
-" " when workspace plugin doesn't work
-" if has('persistent_undo')
-"   set undofile
-"   if has('nvim')
-"     set undodir=$HOME/.local/share/nvim/undo/
-"   else
-"     set undodir=$HOME/.vim/undo/
-"   endif
-" endif
-" ###########################################
-
-
-" display marks on the left #################
-Plug 'kshenoy/vim-signature'
-" ###########################################
-
-
-" # ##### Rrun python in buffer ###############
-Plug 'thinca/vim-quickrun'
-let g:quickrun_config = {
-      \'*': {
-        \'outputter/buffer/split': ':rightbelow vsplit'},}
-nnoremap <silent> <F5> :w<CR> :QuickRun python3<CR>
-vnoremap <silent> <F5> :w<CR> :QuickRun python3<CR>
-" ###############################################
-
-
-" Ipython for vim ###########################
-Plug 'jpalardy/vim-slime', { 'for': 'python' }
-Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
-" let g:ipython_cell_delimit_cells_by = 'marks'
-let g:ipython_cell_delimit_cells_by = 'tags'
-let g:slime_target = 'neovim'
-let g:slime_dont_ask_default = 1
-
-function! IPythonOpen()
-  " open a new terminal in vertical split and run IPython
-  vnew|call termopen('ipython --matplotlib')
-  file ipython " name the new buffer
-
-  " set slime target to new terminal
-  if !exists('g:slime_default_config')
-    let g:slime_default_config = {}
-  end
-  let g:slime_default_config['jobid'] = b:terminal_job_id
-
-  wincmd p " switch to the previous buffer
-endfunction
-" ###########################################
-
-
-" CoC ###########################################
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Give more space for displaying messages.
-set cmdheight=2
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=300
-" Recently vim can merge signcolumn and number column into one
-if has("patch-8.1.1564")
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
+if !has('ide')
+  " save sessions between restarts ############
+  Plug 'thaerkh/vim-workspace'
+  let g:workspace_autocreate = 1
+  if has('nvim')
+    let g:workspace_session_directory = $HOME . '/.local/share/nvim/sessions/'
+    let g:workspace_undodir = $HOME . '/.local/share/nvim/undo/'
   else
-    call CocActionAsync('doHover')
+    let g:workspace_session_directory = $HOME . '/.vim/sessions/'
+    let g:workspace_undodir = $HOME . '/.vim/undo/'
   endif
-endfunction
-nmap <leader>rn <Plug>(coc-rename)
-" ####################################################
+  " " when workspace plugin doesn't work
+  " if has('persistent_undo')
+  "   set undofile
+  "   if has('nvim')
+  "     set undodir=$HOME/.local/share/nvim/undo/
+  "   else
+  "     set undodir=$HOME/.vim/undo/
+  "   endif
+  " endif
+  " ###########################################
 
 
-" Tabline ###########################################
-Plug 'pacha/vem-tabline'
-let g:vem_tabline_show = 2
-let g:vem_tabline_show_number = 'buffnr'
-nmap <C-PageDown> <Plug>vem_next_buffer-
-nmap <C-PageUp> <Plug>vem_prev_buffer-
-" ####################################################
+  " display marks on the left #################
+  Plug 'kshenoy/vim-signature'
+  " ###########################################
 
 
-" ############ run current files in terminal #######################
-Plug 'erietz/vim-terminator'
-let g:terminator_clear_default_mappings="nothing"
-nnoremap <silent> <F5> :TerminatorRunFileInOutputBuffer <CR>
-nnoremap <silent> <F6> :TerminatorStopRun <CR>
-nnoremap <silent> <F8> :TerminatorRunFileInTerminal <CR>
-" #################################################################################
+  " # ##### Rrun python in buffer ###############
+  Plug 'thinca/vim-quickrun'
+  let g:quickrun_config = {
+        \'*': {
+          \'outputter/buffer/split': ':rightbelow vsplit'},}
+  nnoremap <silent> <F5> :w<CR> :QuickRun python3<CR>
+  vnoremap <silent> <F5> :w<CR> :QuickRun python3<CR>
+  " ###############################################
 
+
+  " Ipython for vim ###########################
+  Plug 'jpalardy/vim-slime', { 'for': 'python' }
+  Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
+  " let g:ipython_cell_delimit_cells_by = 'marks'
+  let g:ipython_cell_delimit_cells_by = 'tags'
+  let g:slime_target = 'neovim'
+  let g:slime_dont_ask_default = 1
+
+  function! IPythonOpen()
+    " open a new terminal in vertical split and run IPython
+    vnew|call termopen('ipython --matplotlib')
+    file ipython " name the new buffer
+
+    " set slime target to new terminal
+    if !exists('g:slime_default_config')
+      let g:slime_default_config = {}
+    end
+    let g:slime_default_config['jobid'] = b:terminal_job_id
+
+    wincmd p " switch to the previous buffer
+  endfunction
+  " ###########################################
+
+
+  " CoC ###########################################
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  " Give more space for displaying messages.
+  set cmdheight=2
+  " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+  " delays and poor user experience.
+  set updatetime=300
+  " Recently vim can merge signcolumn and number column into one
+  if has("patch-8.1.1564")
+    set signcolumn=number
+  else
+    set signcolumn=yes
+  endif
+  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gy <Plug>(coc-type-definition)
+  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gr <Plug>(coc-references)
+  nmap <silent> [g <Plug>(coc-diagnostic-prev)
+  nmap <silent> ]g <Plug>(coc-diagnostic-next)
+  " Use K to show documentation in preview window.
+  nnoremap <silent> K :call <SID>show_documentation()<CR>
+  function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+      execute 'h '.expand('<cword>')
+    else
+      call CocActionAsync('doHover')
+    endif
+  endfunction
+  nmap <leader>rn <Plug>(coc-rename)
+  " ####################################################
+
+
+  " Tabline ###########################################
+  Plug 'pacha/vem-tabline'
+  let g:vem_tabline_show = 2
+  let g:vem_tabline_show_number = 'buffnr'
+  nmap <C-PageDown> <Plug>vem_next_buffer-
+  nmap <C-PageUp> <Plug>vem_prev_buffer-
+  " ####################################################
+
+
+  " ############ run current files in terminal #######################
+  Plug 'erietz/vim-terminator'
+  let g:terminator_clear_default_mappings="nothing"
+  nnoremap <silent> <F5> :TerminatorRunFileInOutputBuffer <CR>
+  nnoremap <silent> <F6> :TerminatorStopRun <CR>
+  nnoremap <silent> <F8> :TerminatorRunFileInTerminal <CR>
+  " #################################################################################
+endif
 
 " ############ SMALLER PLUGINS #######################
 Plug 'psf/black', {'branch': 'main'}
@@ -162,7 +163,10 @@ nnoremap <C-k> <C-w><C-k>
 nnoremap <C-l> <C-w><C-l>
 nnoremap <C-h> <C-w><C-h>
 
-inoremap <C-n> :tabedit %<CR>
+if !has('ide')
+  nnoremap <C-n> :tabedit %<CR>
+  inoremap <C-n> :tabedit %<CR>
+endif
 inoremap <A-1> 1gt
 inoremap <A-2> 2gt
 inoremap <A-3> 3gt
@@ -172,7 +176,6 @@ inoremap <A-6> 6gt
 inoremap <A-7> 7gt
 inoremap <A-8> 8gt
 inoremap <A-9> 9gt
-nnoremap <C-n> :tabedit %<CR>
 nnoremap <A-1> 1gt
 nnoremap <A-2> 2gt
 nnoremap <A-3> 3gt
@@ -187,15 +190,19 @@ nnoremap	;	:
 cmap		Q	quit
 " ctrl+v pastes from + register in insert mode
 inoremap <c-v> <esc>:set paste<cr>a<c-r>=getreg('+')<cr><esc>:set nopaste<cr>mi`[=`]`ia
+if has('ide')
+ inoremap <c-v> <esc>:set paste<cr>a<c-r>*<cr><esc>:set nopaste<cr>mi`[=`]`ia
+endif
 
 " search & replace word under cursor
 :nnoremap <Leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
-
-" remove search highlighting on esc
+" C-r doesn't work in ideavim using another solution
 if has('ide')
-  nnoremap <silent> <Enter> :noh<cr>
+  :nnoremap <Leader>s * :%s///g<Left><Left>
 endif
 
+" remove search highlighting on esc - when not using romainl's plugin
+nnoremap <silent> <Esc> :noh<cr>
 
 " map brackets and gn/gp for diffview to move to prev/next diff
 if &diff
@@ -286,4 +293,13 @@ set bg=dark
 " replace previous spell error with first suggestion in insert
 imap <c-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
-vnoremap p "_dP  " don't overwrite the register when replacing selected text
+" don't overwrite the register when replacing selected text
+vnoremap p "_dP
+vnoremap P "_dP
+
+if has('ide')
+  set ideajoin=true
+  set lookupkeys="<Tab>"
+  " plug surround does not work properly (ds" not working for example)
+  set surround
+endif
