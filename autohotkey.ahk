@@ -4,7 +4,9 @@ XButton2::PgDn
 
 #If WinActive("ahk_exe chrome.exe") || WinActive("ahk_exe Slack.exe") || WinActive("ahk_class CabinetWClass")
 WheelLeft::Browser_Back
+^XButton2::Browser_Back
 WheelRight::Browser_Forward
+^XButton1::Browser_Forward
 #IfWinActive
 
 
