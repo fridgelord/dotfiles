@@ -297,7 +297,7 @@ imap <c-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
 " don't overwrite the register when replacing selected text
 vnoremap p "_dp
-vnoremap P "_dp
+vnoremap P "_dP
 
 if has('ide')
   set ideajoin=true
