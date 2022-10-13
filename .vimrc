@@ -13,14 +13,14 @@ endif
 
 if !has('ide')
   " save sessions between restarts ############
-  Plug 'thaerkh/vim-workspace'
-  let g:workspace_autocreate = 1
   if has('nvim')
+    Plug 'thaerkh/vim-workspace'
+    let g:workspace_autocreate = 1
     let g:workspace_session_directory = $HOME . '/.local/share/nvim/sessions/'
     let g:workspace_undodir = $HOME . '/.local/share/nvim/undo/'
-  else
-    let g:workspace_session_directory = $HOME . '/.vim/sessions/'
-    let g:workspace_undodir = $HOME . '/.vim/undo/'
+  " else
+  "   let g:workspace_session_directory = $HOME . '/.vim/sessions/'
+  "   let g:workspace_undodir = $HOME . '/.vim/undo/'
   endif
   " " when workspace plugin doesn't work
   " if has('persistent_undo')
@@ -73,38 +73,40 @@ if !has('ide')
   " ###########################################
 
 
-  " CoC ###########################################
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  " Give more space for displaying messages.
-  set cmdheight=2
-  " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-  " delays and poor user experience.
-  set updatetime=300
-  " Recently vim can merge signcolumn and number column into one
-  if has("patch-8.1.1564")
-    set signcolumn=number
-  else
-    set signcolumn=yes
-  endif
-  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-  nmap <silent> gd <Plug>(coc-definition)
-  nmap <silent> gy <Plug>(coc-type-definition)
-  nmap <silent> gi <Plug>(coc-implementation)
-  nmap <silent> gr <Plug>(coc-references)
-  nmap <silent> [g <Plug>(coc-diagnostic-prev)
-  nmap <silent> ]g <Plug>(coc-diagnostic-next)
-  " Use K to show documentation in preview window.
-  nnoremap <silent> K :call <SID>show_documentation()<CR>
-  function! s:show_documentation()
-    if (index(['vim','help'], &filetype) >= 0)
-      execute 'h '.expand('<cword>')
+  if has('nvim')
+    " CoC ###########################################
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    " Give more space for displaying messages.
+    set cmdheight=2
+    " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+    " delays and poor user experience.
+    set updatetime=300
+    " Recently vim can merge signcolumn and number column into one
+    if has("patch-8.1.1564")
+      set signcolumn=number
     else
-      call CocActionAsync('doHover')
+      set signcolumn=yes
     endif
-  endfunction
-  nmap <leader>rn <Plug>(coc-rename)
-  " ####################################################
+    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    nmap <silent> gd <Plug>(coc-definition)
+    nmap <silent> gy <Plug>(coc-type-definition)
+    nmap <silent> gi <Plug>(coc-implementation)
+    nmap <silent> gr <Plug>(coc-references)
+    nmap <silent> [g <Plug>(coc-diagnostic-prev)
+    nmap <silent> ]g <Plug>(coc-diagnostic-next)
+    " Use K to show documentation in preview window.
+    nnoremap <silent> K :call <SID>show_documentation()<CR>
+    function! s:show_documentation()
+      if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+      else
+        call CocActionAsync('doHover')
+      endif
+    endfunction
+    nmap <leader>rn <Plug>(coc-rename)
+    " ####################################################
+  endif
 
 
   " Tabline ###########################################
@@ -205,12 +207,12 @@ endif
 nnoremap <silent> <Esc> :noh<cr>
 
 " map brackets and gn/gp for diffview to move to prev/next diff
-if &diff
-  map gn ]c
-  map gp [c
-  map ] ]c
-  map [ [c
-endif
+" if &diff
+"   map gn ]c
+"   ap gp [c
+"   map ] ]c
+"   map [ [c
+" endif
 
 " Enable folding
 set foldmethod=indent
@@ -294,8 +296,8 @@ set bg=dark
 imap <c-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
 " don't overwrite the register when replacing selected text
-vnoremap p "_dP
-vnoremap P "_dP
+vnoremap p "_dp
+vnoremap P "_dp
 
 if has('ide')
   set ideajoin=true
