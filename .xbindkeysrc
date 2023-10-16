@@ -41,8 +41,14 @@
 # End of xbindkeys configuration #
 ##################################
 
+# Requires: xautomation package
 "xte 'key Page_Up'"
   b:8
 
 "xte 'key Page_Down'"
   b:9
+
+"xte "key XF86Back""
+  b:6
+"xte "key XF86Forward""
+  b:7
