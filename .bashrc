@@ -7,10 +7,8 @@ xhost +local:root > /dev/null 2>&1
 
 complete -cf sudo
 
-# Bash won't get SIGWINCH if another process is in the foreground.
-# Enable checkwinsize so that bash will check the terminal size when
-# it regains control.  #65623
-# http://cnswww.cns.cwru.edu/~chet/bash/FAQ (E11)
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
 shopt -s expand_aliases
@@ -56,6 +54,11 @@ fi
 
 # Enable history appending instead of overwriting.  #139609
 shopt -s histappend
+
+# don't put duplicate lines or lines starting with space in the history.
+HISTCONTROL=ignoreboth
+HISTSIZE=1000
+HISTFILESIZE=2000
 
 # Change the window title of X terminals
 case ${TERM} in
@@ -104,7 +107,7 @@ if ${use_color} ; then
 		PS1='\[\033[01;32m\][\u@\h\[\033[01;37m\] \W\[\033[01;32m\]]\[\033[01;33m\]$(parse_git_branch)\[\033[01;32m\]\$\[\033[00m\] '
 	fi
 
-#alias ls='ls --color=auto'
+	alias ls='ls --color=auto'
 	alias grep='grep --colour=auto -i'
 	alias egrep='egrep --colour=auto'
 	alias fgrep='fgrep --colour=auto'
@@ -175,9 +178,10 @@ colors() {
 }
 
 [ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
+[ -r /etc/bash_completion   ] && . /etc/bash_completion
 BROWSER=/usr/bin/xdg-open
 
-export PATH=$PATH:~/bin
+export PATH=$PATH:~/bin:~/.local/bin
 export EDITOR=/usr/bin/vim
 # if [ -f /usr/lib/bash-git-prompt/gitprompt.sh ]; then
    # # To only show the git prompt in or under a repository directory
@@ -216,5 +220,16 @@ fi
 stty stop undef # to unmap ctrl-s
 
 
-source /usr/share/fzf/key-bindings.bash
-source /usr/share/fzf/completion.bash
+[[ -r /usr/share/fzf/key-bindings.bash ]] && source /usr/share/fzf/key-bindings.bash
+[[ -r /usr/share/fzf/completion.bash ]] && source /usr/share/fzf/completion.bash
+[[ -r /usr/share/doc/fzf/examples/key-bindings.bash ]] && source /usr/share/doc/fzf/examples/key-bindings.bash
+
+# completion case insenstive
+bind -s 'set completion-ignore-case on'
+
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+export PS1="\u@\h \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch)\[\e[00m\]$ "
+
+[[ -r ~/.bashrc_work]] && source ~/.bashrc_work
