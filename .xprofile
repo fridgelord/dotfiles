@@ -7,5 +7,3 @@ if [ -f "$userxbindkeysrc" ]; then
     xbindkeys &
 fi
 
-# disalbe touchpad left and right swipe working as back/forward
-xinput set-button-map "SYNA8007:00 06CB:CD8C Touchpad" 1 2 3 4 5 0 0
