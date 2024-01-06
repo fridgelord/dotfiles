@@ -160,11 +160,6 @@ call plug#end()
 set ignorecase		" ignore case
 set smartcase		" but don't ignore it, when search string contains uppercase letters
 
-nnoremap <C-j> <C-w><C-j>
-nnoremap <C-k> <C-w><C-k>
-nnoremap <C-l> <C-w><C-l>
-nnoremap <C-h> <C-w><C-h>
-
 if !has('ide')
   nnoremap <C-n> :tabedit %<CR>
   inoremap <C-n> :tabedit %<CR>
