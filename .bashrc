@@ -178,6 +178,7 @@ colors() {
 }
 
 [ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
+[ -r /usr/share/bash-completion/completions/git   ] && . /usr/share/bash-completion/completions/git
 [ -r /etc/bash_completion   ] && . /etc/bash_completion
 BROWSER=/usr/bin/xdg-open
 
@@ -232,4 +233,5 @@ parse_git_branch() {
 }
 export PS1="\u@\h \[\e[32m\]\w \[\e[91m\]\$(parse_git_branch)\[\e[00m\]$ "
 
-[[ -r ~/.bashrc_work]] && source ~/.bashrc_work
+[[ -r ~/.bashrc_work ]] && source ~/.bashrc_work
+
