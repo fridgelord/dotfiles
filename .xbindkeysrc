@@ -48,7 +48,7 @@
 "xte 'key Page_Down'"
   b:9
 
-"xte "key XF86Back""
-  b:6
-"xte "key XF86Forward""
+"xte 'key XF86Back'"
   b:7
+"xte 'key XF86Forward'"
+  b:6

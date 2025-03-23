@@ -237,7 +237,7 @@ set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
 set hls
 set rdt=3000
-set number relativenumber	" line numbers relative
+set number 
 set cindent		" guess what indent should be used (c-like)
 set autoindent		" cp indent from previous line
 set mouse=a		" use mouse in xterm
@@ -260,7 +260,7 @@ set splitright		" open new split to the right
 
 set statusline=%{FugitiveStatusline()}%<%f%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P	"char code in statusline + fugitive
 set cursorline
-set scrolloff=10
+" set scrolloff=10
 
 
 " webcode
