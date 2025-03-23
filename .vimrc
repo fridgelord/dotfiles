@@ -250,7 +250,14 @@ set formatoptions=1	" prevent edited lines from breaking
 set nolinebreak		" if wrapping do so only on whitespace
 syntax on			
 set confirm		" ask on quit
-set clipboard=unnamedplus " on linux it's ctrl-c clipboard on, on win it doesn't matter
+if has("unix")
+  let s:uname = system("uname")
+  if s:uname == "Darwin\n"
+    set clipboard=unnamed 
+  else
+    set clipboard=unnamedplus
+  endif
+endif
 set laststatus=2	" always dispaly status line
 set wildignorecase
 set completeopt=menu,longest,preview
