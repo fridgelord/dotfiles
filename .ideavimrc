@@ -1,10 +1,11 @@
 "" Source your .vimrc
 source ~/.vimrc
+let mapleader=" "
 
 "" -- Suggested options --
 " Show a few lines of context around the cursor. Note that this makes the
 " text scroll if you mouse-click near the start or end of the window.
-set scrolloff=5
+" set scrolloff=5
 
 " Do incremental searching.
 set incsearch
@@ -29,3 +30,15 @@ map Q gq
 set clipboard+=unnamed
 set surround
 set commentary
+set argtextobj
+
+set ideajoin
+
+nmap <leader>b <Action>(Git.Branches)
+nmap <leader>nb <Action>(GitNewBranchAction)
+nmap <leader>gh <Action>(Vcs.ShowTabbedFileHistory)
+nmap <leader>d <Action>(ActivateDatabaseToolWindow)
+nmap <leader>gr <Action>(ChangesView.Revert)
+nmap <leader>gb <Action>(Annotate)
+nmap <leader>f <Action>(GotoFile)
+
