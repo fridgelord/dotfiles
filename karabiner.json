@@ -1805,7 +1805,7 @@
                                 "conditions": [
                                     {
                                         "bundle_identifiers": [
-                                            "^com\\.google\\.Chrome\\.app\\.fmfmkoebhaeglbnjibafgobfeiijinal$"
+                                            "^com.todoist.mac.Todoist$"
                                         ],
                                         "type": "frontmost_application_unless"
                                     }
@@ -1814,14 +1814,14 @@
                                     "key_code": "6",
                                     "modifiers": { "mandatory": ["left_option"] }
                                 },
-                                "to": [{ "shell_command": "open -a 'Jira.app'" }],
+                                "to": [{ "shell_command": "open -a 'Todoist.app'" }],
                                 "type": "basic"
                             },
                             {
                                 "conditions": [
                                     {
                                         "bundle_identifiers": [
-                                            "^com\\.google\\.Chrome\\.app\\.fmfmkoebhaeglbnjibafgobfeiijinal$"
+                                            "^com.todoist.mac.Todoist$"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
