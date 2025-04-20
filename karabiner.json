@@ -4,6 +4,37 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Option+P to change karabiner profile",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "p",
+                                    "modifiers": { "mandatory": ["left_option"] }
+                                },
+                                "to": [{ "shell_command": "'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'private'" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Option+c s to control center",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "s",
+                                    "modifiers": { "mandatory": ["left_option"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "c",
+                                        "modifiers": ["fn"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "map control + arrows to command + arrows for back and forward",
                         "manipulators": [
                             {
@@ -846,22 +877,6 @@
                                 "from": {
                                     "key_code": "tab",
                                     "modifiers": {
-                                        "mandatory": ["option"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "tab",
-                                        "modifiers": ["command"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "tab",
-                                    "modifiers": {
                                         "mandatory": ["control"],
                                         "optional": ["any"]
                                     }
@@ -878,6 +893,7 @@
                     },
                     {
                         "description": "Swap Right Command and Right Option for all keyboards.",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": { "key_code": "right_command" },
@@ -1079,19 +1095,20 @@
                         {
                             "from": { "key_code": "left_option" },
                             "to": [{ "key_code": "left_command" }]
-                        },
-                        {
-                            "from": { "key_code": "right_command" },
-                            "to": [{ "key_code": "right_option" }]
                         }
                     ]
                 }
             ],
             "name": "work",
+            "selected": true,
             "simple_modifications": [
                 {
                     "from": { "key_code": "caps_lock" },
                     "to": [{ "key_code": "escape" }]
+                },
+                {
+                    "from": { "key_code": "right_command" },
+                    "to": [{ "key_code": "right_option" }]
                 }
             ],
             "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
@@ -1099,6 +1116,37 @@
         {
             "complex_modifications": {
                 "rules": [
+                    {
+                        "description": "Option+c s to control center",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "s",
+                                    "modifiers": { "mandatory": ["left_option"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "c",
+                                        "modifiers": ["fn"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Option+P to change karabiner profile",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "p",
+                                    "modifiers": { "mandatory": ["left_option"] }
+                                },
+                                "to": [{ "shell_command": "'/Library/Application Support/org.pqrs/Karabiner-Elements/bin/karabiner_cli' --select-profile 'work'" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
                     {
                         "description": "map control + arrows to command + arrows for back and forward",
                         "manipulators": [
@@ -1937,22 +1985,6 @@
                                 "from": {
                                     "key_code": "tab",
                                     "modifiers": {
-                                        "mandatory": ["option"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "tab",
-                                        "modifiers": ["command"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "tab",
-                                    "modifiers": {
                                         "mandatory": ["control"],
                                         "optional": ["any"]
                                     }
@@ -1969,6 +2001,7 @@
                     },
                     {
                         "description": "Swap Right Command and Right Option for all keyboards.",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": { "key_code": "right_command" },
@@ -2179,11 +2212,14 @@
                 }
             ],
             "name": "private",
-            "selected": true,
             "simple_modifications": [
                 {
                     "from": { "key_code": "caps_lock" },
                     "to": [{ "key_code": "escape" }]
+                },
+                {
+                    "from": { "key_code": "right_command" },
+                    "to": [{ "key_code": "right_option" }]
                 }
             ],
             "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
