@@ -42,3 +42,6 @@ nmap <leader>gr <Action>(ChangesView.Revert)
 nmap <leader>gb <Action>(Annotate)
 nmap <leader>f <Action>(GotoFile)
 
+" map command-? to ctrl-?
+:map <D-v> <C-v>
+:map <D-x> <C-x>
